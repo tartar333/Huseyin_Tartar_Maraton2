@@ -35,6 +35,7 @@ public class Islemler {
 			System.out.println("2. Müşteri İşlemleri");
 			System.out.println("3. Rezervasyon İşlemleri");
 			System.out.println("0. Çıkış Yap");
+			System.out.print("Yapmak istediginiz islemin tusuna basiniz :");
 			
 			int secim = scanner.nextInt();
 			scanner.nextLine();
@@ -67,6 +68,7 @@ public class Islemler {
 			System.out.println("3. Restoranları Listele");
 			System.out.println("4. Restoran Ara");
 			System.out.println("0. Ana Menüye Dön");
+			System.out.print("Yapmak istediginiz islemin tusuna basiniz :");
 			
 			int secim = scanner.nextInt();
 			scanner.nextLine();
@@ -101,6 +103,7 @@ public class Islemler {
 			System.out.println("3. Müşterileri Listele");
 			System.out.println("4. Müşteri Ara");
 			System.out.println("0. Ana Menüye Dön");
+			System.out.print("Yapmak istediginiz islemin tusuna basiniz :");
 			
 			int secim = scanner.nextInt();
 			scanner.nextLine();
@@ -133,7 +136,7 @@ public class Islemler {
 			System.out.println("1. Rezervasyon Yap");
 			System.out.println("2. Rezervasyonları Listele");
 			System.out.println("0. Ana Menüye Dön");
-			
+			System.out.print("Yapmak istediginiz islemin tusuna basiniz :");
 			int secim = scanner.nextInt();
 			scanner.nextLine();
 			
