@@ -1,52 +1,42 @@
 package org.Maraton2.Services;
 
-import org.Maraton2.Repositories.RestoranRepository;
 import org.Maraton2.Models.Restoran;
-import org.Maraton2.Enums.RestoranTipi;
-import org.Maraton2.Enums.Durum;
+import org.Maraton2.Repositories.RestoranRepository;
 
 import java.util.List;
 
 public class RestoranService {
-	private RestoranRepository restoranRepo = new RestoranRepository();
+	private final RestoranRepository restoranRepository;
 	
-	public RestoranService() {
-		this.restoranRepo = restoranRepo;
+	public RestoranService(RestoranRepository restoranRepository) {
+		this.restoranRepository = restoranRepository;
 	}
 	
 	public void restoranEkle(Restoran restoran) {
-		restoranRepo.restoranEkle(restoran);
+		restoranRepository.restoranEkle(restoran);
 	}
 	
 	public void restoranSil(String restoranID) {
-		restoranRepo.restoranSil(restoranID);
+		restoranRepository.restoranSil(restoranID);
 	}
 	
 	public Restoran restoranIDileAra(String restoranID) {
-		return restoranRepo.restoranAra(restoranID);
+		return restoranRepository.restoranIDileAra(restoranID).orElse(null);
 	}
 	
 	public List<Restoran> restoranlariListele() {
-		return restoranRepo.restoranlariListele();
-	}
-	
-	public List<Restoran> restoranTipiIleAra(RestoranTipi tipi) {
-		return restoranRepo.restoranTipiIleAra(tipi);
-	}
-	
-	public List<Restoran> restoranAdiIleAra(String restoranAdi) {
-		return restoranRepo.restoranAdiIleAra(restoranAdi);
-	}
-	
-	public List<Restoran> restoranDurumuIleAra(Durum durum) {
-		return restoranRepo.restoranDurumuIleAra(durum);
-	}
-	
-	public void restoranKapasitesiniGuncelle(String restoranID, int yeniKapasite) {
-		restoranRepo.restoranKapasitesiniGuncelle(restoranID, yeniKapasite);
+		return restoranRepository.restoranlariListele();
 	}
 	
 	public boolean restoranIDVarMi(String restoranID) {
-		return restoranRepo.restoranIDVarMi(restoranID);
+		return restoranRepository.restoranIDVarMi(restoranID);
+	}
+	
+	public void restoranKapasitesiniGuncelle(String restoranID, int yeniKapasite) {
+		restoranRepository.restoranKapasitesiniGuncelle(restoranID, yeniKapasite);
+	}
+	
+	public void kapasiteAzalt(String restoranID) {
+		restoranRepository.kapasiteAzalt(restoranID);
 	}
 }

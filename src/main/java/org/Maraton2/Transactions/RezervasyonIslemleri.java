@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class RezervasyonIslemleri {
@@ -74,7 +75,7 @@ public class RezervasyonIslemleri {
 		
 		System.out.println("Müşteri ID:");
 		String musteriID = scanner.nextLine();
-		Musteri musteri = musteriService.musteriIDileAra(musteriID);
+		Optional<Musteri> musteri = musteriService.musteriIDileAra(musteriID);
 		if (musteri == null) {
 			System.out.println("Müşteri bulunamadı.");
 			return;
@@ -106,56 +107,70 @@ public class RezervasyonIslemleri {
 		
 		Rezervasyon rezervasyon = new Rezervasyon(rezervasyonID, musteriID, restoranID, rezervasyonTarihi);
 		rezervasyonService.rezervasyonEkle(rezervasyon);
-		System.out.println("Rezervasyon yapıldı.");
-		
-		// Restoran kapasitesini güncelle
-		restoranService.restoranKapasitesiniGuncelle(restoranID, restoran.getKapasite() - 1);
+		restoranService.kapasiteAzalt(restoranID);
+		System.out.println("Rezervasyon başarıyla eklendi.");
 	}
-
 	
-	private void rezervasyonSil() {
-		System.out.println("Silinecek Rezervasyon ID'si:");
+	public void rezervasyonSil() {
+		System.out.println("Silmek istediğiniz rezervasyonun ID'sini girin:");
 		String rezervasyonID = scanner.nextLine();
-		rezervasyonService.rezervasyonSil(rezervasyonID);
-		System.out.println("Rezervasyon silindi.");
+		if (rezervasyonService.rezervasyonIDVarMi(rezervasyonID)) {
+			rezervasyonService.rezervasyonSil(rezervasyonID);
+			System.out.println("Rezervasyon başarıyla silindi.");
+		} else {
+			System.out.println("Belirtilen ID ile bir rezervasyon bulunamadı.");
+		}
 	}
 	
-	private void rezervasyonlariListele() {
+	public void rezervasyonlariListele() {
 		List<Rezervasyon> rezervasyonlar = rezervasyonService.rezervasyonlariListele();
-		for (Rezervasyon rezervasyon : rezervasyonlar) {
-			System.out.println(rezervasyon);
+		if (rezervasyonlar.isEmpty()) {
+			System.out.println("Hiç rezervasyon bulunmuyor.");
+		} else {
+			for (Rezervasyon rezervasyon : rezervasyonlar) {
+				System.out.println(rezervasyon);
+			}
 		}
 	}
 	
 	private void rezervasyonAramaMenu() {
 		while (true) {
 			System.out.println("Rezervasyon Arama:");
-			System.out.println("1. Rezervasyon ID ile Ara");
+			System.out.println("1. Tarihe Göre Rezervasyonları Listele");
 			System.out.println("0. Geri Dön");
 			
 			int secim = scanner.nextInt();
-			scanner.nextLine(); // Yeni satırı temizle
+			scanner.nextLine();
 			
 			switch (secim) {
 				case 1:
-					rezervasyonIDileAra();
+					rezervasyonTariheGoreListele();
 					break;
 				case 0:
-					return; // Önceki menüye dön
+					return;
 				default:
 					System.out.println("Geçersiz seçim, lütfen tekrar deneyin.");
 			}
 		}
 	}
 	
-	private void rezervasyonIDileAra() {
-		System.out.println("Rezervasyon ID:");
-		String rezervasyonID = scanner.nextLine();
-		boolean rezervasyon = rezervasyonService.rezervasyonIDVarMi(rezervasyonID);
-		if (rezervasyon == true) {
-			System.out.println(rezervasyon);
+	private void rezervasyonTariheGoreListele() {
+		System.out.println("Rezervasyon Tarihi (yyyy-MM-dd):");
+		String tarihStr = scanner.nextLine();
+		LocalDateTime tarih;
+		try {
+			tarih = LocalDateTime.parse(tarihStr + "T00:00:00"); // Saat kısmını ekleyin
+		} catch (DateTimeParseException e) {
+			System.out.println("Tarih formatı hatalı. Lütfen belirtilen formatta girin.");
+			return;
+		}
+		List<Rezervasyon> rezervasyonlar = rezervasyonService.tarihileRezervasyonlariListele(tarih);
+		if (rezervasyonlar.isEmpty()) {
+			System.out.println("Belirtilen tarihte rezervasyon bulunamadı.");
 		} else {
-			System.out.println("Rezervasyon bulunamadı.");
+			for (Rezervasyon rezervasyon : rezervasyonlar) {
+				System.out.println(rezervasyon);
+			}
 		}
 	}
 }

@@ -4,6 +4,9 @@ import org.Maraton2.Models.RestoranOlusturucu;
 import org.Maraton2.Transactions.RestoranIslemleri;
 import org.Maraton2.Transactions.MusteriIslemleri;
 import org.Maraton2.Transactions.RezervasyonIslemleri;
+import org.Maraton2.Repositories.MusteriRepository;
+import org.Maraton2.Repositories.RezervasyonRepository;
+import org.Maraton2.Repositories.RestoranRepository;
 import org.Maraton2.Services.RestoranService;
 import org.Maraton2.Services.MusteriService;
 import org.Maraton2.Services.RezervasyonService;
@@ -12,18 +15,19 @@ import java.util.Scanner;
 
 public class Runner {
 	private static final Scanner scanner = new Scanner(System.in);
-	private static final RestoranService restoranService = new RestoranService();
-	private static final MusteriService musteriService = new MusteriService();
-	private static final RezervasyonService rezervasyonService = new RezervasyonService();
+	public static final RestoranRepository restoranRepository = new RestoranRepository();
+	private static final MusteriRepository musteriRepository = new MusteriRepository();
+	private static final RezervasyonRepository rezervasyonRepository = new RezervasyonRepository();
+	private static final RestoranService restoranService = new RestoranService(restoranRepository);
+	private static final MusteriService musteriService = new MusteriService(musteriRepository);
+	private static final RezervasyonService rezervasyonService = new RezervasyonService(rezervasyonRepository);
 	static RestoranOlusturucu restoranOlusturucu = new RestoranOlusturucu(scanner, restoranService);
+	
 	public static void main(String[] args) {
-		
 		restoranOlusturucu.restoranOlustur();
 		
 		RestoranIslemleri restoranIslemleri = new RestoranIslemleri(scanner, restoranService);
 		RezervasyonIslemleri rezervasyonIslemleri = new RezervasyonIslemleri(scanner, rezervasyonService, musteriService, restoranService);
-		Scanner scanner = new Scanner(System.in);
-		MusteriService musteriService = new MusteriService();
 		MusteriIslemleri musteriIslemleri = new MusteriIslemleri(musteriService, scanner);
 		
 		while (true) {
@@ -34,7 +38,7 @@ public class Runner {
 			System.out.println("0. Çıkış Yap");
 			
 			int secim = scanner.nextInt();
-			scanner.nextLine(); // Yeni satırı temizle
+			scanner.nextLine();
 			
 			switch (secim) {
 				case 1:

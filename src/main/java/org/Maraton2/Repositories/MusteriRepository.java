@@ -2,8 +2,8 @@ package org.Maraton2.Repositories;
 
 import org.Maraton2.Models.Musteri;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MusteriRepository {
@@ -17,12 +17,12 @@ public class MusteriRepository {
 		musteriler.removeIf(m -> m.getId().equals(musteriID));
 	}
 	
-	public Musteri musteriAra(String musteriID) {
+	public Optional<Musteri>musteriIDileAra(String musteriID) {
 		return musteriler.stream()
 		                 .filter(m -> m.getId().equals(musteriID))
-		                 .findFirst()
-		                 .orElse(null);
+		                 .findFirst();
 	}
+	
 	public List<Musteri> musterileriListele() {
 		return new ArrayList<>(musteriler);
 	}
@@ -33,15 +33,8 @@ public class MusteriRepository {
 		                 .collect(Collectors.toList());
 	}
 	
-	public Musteri musteriIDileAra(String musteriID) {
-		return musteriler.stream()
-		                     .filter(musteri -> musteri.getId().equals(musteriID))
-		                     .findFirst()
-		                     .orElse(null);
-	}
-	
 	public boolean musteriIDVarMi(String musteriID) {
 		return musteriler.stream()
-                         .anyMatch(m -> m.getId().equals(musteriID));
+		                 .anyMatch(m -> m.getId().equals(musteriID));
 	}
 }

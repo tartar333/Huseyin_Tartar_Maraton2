@@ -1,30 +1,58 @@
 package org.Maraton2.Services;
 
-import org.Maraton2.Repositories.RezervasyonRepository;
 import org.Maraton2.Models.Rezervasyon;
+import org.Maraton2.Repositories.RezervasyonRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class RezervasyonService {
-	private RezervasyonRepository rezervasyonRepo = new RezervasyonRepository();
+	private final RezervasyonRepository rezervasyonRepository;
 	
-	public RezervasyonService() {
-		this.rezervasyonRepo = rezervasyonRepo;
+	public RezervasyonService(RezervasyonRepository rezervasyonRepository) {
+		this.rezervasyonRepository = rezervasyonRepository;
 	}
 	
-	public boolean rezervasyonIDVarMi(String rezervasyonID) {
-		return rezervasyonRepo.rezervasyonIDVarMi(rezervasyonID);
-	}
-	
+	// Rezervasyon ekleme
 	public void rezervasyonEkle(Rezervasyon rezervasyon) {
-		rezervasyonRepo.rezervasyonYap(rezervasyon);
+		rezervasyonRepository.rezervasyonYap(rezervasyon);
 	}
 	
-	public List<Rezervasyon> rezervasyonlariListele() {
-		return rezervasyonRepo.rezervasyonlariListele();
-	}
-	
+	// Rezervasyon silme
 	public void rezervasyonSil(String rezervasyonID) {
-		rezervasyonRepo.rezervasyonYap(new Rezervasyon(rezervasyonID, "", ""));
+		rezervasyonRepository.rezervasyonSil(rezervasyonID);
 	}
+	
+	// Rezervasyon ID ile arama
+	public Rezervasyon rezervasyonIDileAra(String rezervasyonID) {
+		if (rezervasyonRepository.rezervasyonIDVarMi(rezervasyonID)) {
+			return rezervasyonRepository.rezervasyonlariListele().stream()
+			                            .filter(r -> r.getRezervasyonID().equals(rezervasyonID))
+			                            .findFirst()
+			                            .orElse(null);
+		}
+		return null;
+	}
+	
+	// Müşteri ID ile rezervasyonları listeleme
+	public List<Rezervasyon> musteriIDileRezervasyonlariListele(String musteriID) {
+		return rezervasyonRepository.musteriIDileRezervasyonlariListele(musteriID);
+	}
+	
+	// Tarihe göre rezervasyonları listeleme
+	public List<Rezervasyon> tarihileRezervasyonlariListele(LocalDateTime tarih) {
+		return rezervasyonRepository.tarihleRezervasyonlariListele(tarih);
+	}
+	
+	// Tüm rezervasyonları listeleme
+	public List<Rezervasyon> rezervasyonlariListele() {
+		return rezervasyonRepository.rezervasyonlariListele();
+	}
+	
+	// Rezervasyon ID'nin var olup olmadığını kontrol etme
+	public boolean rezervasyonIDVarMi(String rezervasyonID) {
+		return rezervasyonRepository.rezervasyonIDVarMi(rezervasyonID);
+	}
+
 }

@@ -2,7 +2,7 @@ package org.Maraton2.Models;
 
 import org.Maraton2.Enums.Durum;
 import org.Maraton2.Enums.RestoranTipi;
-import org.Maraton2.Models.Restoran;
+import org.Maraton2.Repositories.RestoranRepository;
 import org.Maraton2.Services.RestoranService;
 
 import java.util.Random;
@@ -64,7 +64,8 @@ public class RestoranOlusturucu {
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		RestoranService restoranService = new RestoranService(); // Service sınıfı uygun şekilde yapılandırılmalı
+		RestoranRepository restoranRepository = null;
+		RestoranService restoranService = new RestoranService(restoranRepository); // Service sınıfı uygun şekilde yapılandırılmalı
 		
 		RestoranOlusturucu olusturucu = new RestoranOlusturucu(scanner, restoranService);
 		olusturucu.restoranOlustur();
