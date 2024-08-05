@@ -1,6 +1,8 @@
 package org.Maraton2.Repositories;
 
 import org.Maraton2.Models.Musteri;
+
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +19,11 @@ public class MusteriRepository {
 		musteriler.removeIf(m -> m.getId().equals(musteriID));
 	}
 	
-	public Optional<Musteri>musteriIDileAra(String musteriID) {
+	public Musteri musteriIDileAra(String musteriID) {
 		return musteriler.stream()
 		                 .filter(m -> m.getId().equals(musteriID))
-		                 .findFirst();
+		                 .findFirst()
+		                 .orElse(null);
 	}
 	
 	public List<Musteri> musterileriListele() {
@@ -29,7 +32,7 @@ public class MusteriRepository {
 	
 	public List<Musteri> musteriIsimIleAra(String isim) {
 		return musteriler.stream()
-		                 .filter(m -> m.getIsim().equalsIgnoreCase(isim))
+		                 .filter(m -> m.getAdi().equalsIgnoreCase(isim))
 		                 .collect(Collectors.toList());
 	}
 	

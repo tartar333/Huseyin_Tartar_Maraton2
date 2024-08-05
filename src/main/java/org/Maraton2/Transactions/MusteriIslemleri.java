@@ -5,7 +5,6 @@ import org.Maraton2.Services.MusteriService;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class MusteriIslemleri {
@@ -50,19 +49,26 @@ public class MusteriIslemleri {
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra input buffer'ı temizle
+				scanner.nextLine();
 			}
 		}
 	}
 	
 	public void musteriEkle() {
-		System.out.println("Yeni Müşteri ID:");
-		String musteriID = scanner.nextLine();
-		scanner.nextLine();
-		// ID kontrolü
-		if (musteriService.musteriIDVarMi(musteriID)) {
-			System.out.println("Bu ID ile zaten bir müşteri mevcut. Lütfen başka bir ID girin.");
-			return;
+		String musteriID;
+		while (true) {
+			System.out.println("Yeni Müşteri ID:");
+			musteriID = scanner.nextLine();
+			if (!isValidID(musteriID)) {
+				System.out.println("Geçersiz ID formatı. Lütfen geçerli bir ID girin.");
+				continue;
+			}
+			// ID kontrolü
+			if (!musteriService.musteriIDVarMi(musteriID)) {
+				break;
+			} else {
+				System.out.println("Bu ID ile zaten bir müşteri mevcut. Lütfen başka bir ID girin.");
+			}
 		}
 		
 		System.out.println("Müşteri Adı:");
@@ -93,24 +99,28 @@ public class MusteriIslemleri {
 	}
 	
 	private void musteriSil() {
-		System.out.println("Silinecek Müşterinin ID'si:");
-		String musteriID = scanner.nextLine();
-		if (musteriService.musteriIDVarMi(musteriID)) {
-			musteriService.musteriSil(musteriID);
-			System.out.println("Müşteri silindi.");
-		} else {
-			System.out.println("Bu ID ile bir müşteri bulunamadı.");
+		String musteriID;
+		while (true) {
+			System.out.println("Silinecek Müşterinin ID'si:");
+			musteriID = scanner.nextLine();
+			if (!isValidID(musteriID)) {
+				System.out.println("Geçersiz ID formatı. Lütfen geçerli bir ID girin.");
+				continue;
+			}
+			if (musteriService.musteriIDVarMi(musteriID)) {
+				musteriService.musteriSil(musteriID);
+				System.out.println("Müşteri silindi.");
+				break;
+			} else {
+				System.out.println("Bu ID ile bir müşteri bulunamadı. Lütfen geçerli bir ID girin.");
+			}
 		}
 	}
 	
 	private void musterileriListele() {
 		List<Musteri> musteriler = musteriService.musterileriListele();
-		if (musteriler.isEmpty()) {
-			System.out.println("Listelenecek müşteri bulunamadı.");
-		} else {
-			for (Musteri musteri : musteriler) {
-				System.out.println(musteri);
-			}
+		for (Musteri musteri : musteriler) {
+			System.out.println("Müşteri ID: " + musteri.getId() + ", İsim: " + musteri.getAdi() + ", Soyisim: " + musteri.getSoyadi() + ", Telefon: " + musteri.getTelefon() + ", Mail: " + musteri.getMail());
 		}
 	}
 	
@@ -126,11 +136,9 @@ public class MusteriIslemleri {
 				
 				switch (secim) {
 					case 1:
-						scanner.nextLine();
 						musteriIDileAra();
 						break;
 					case 2:
-						scanner.nextLine();
 						musteriAdiIleAra();
 						break;
 					case 0:
@@ -146,25 +154,39 @@ public class MusteriIslemleri {
 	}
 	
 	private void musteriIDileAra() {
-		System.out.print("Müşteri ID: ");
-		String musteriID = scanner.nextLine();
-		Optional<Musteri> musteri = musteriService.musteriIDileAra(musteriID);
-		if (musteri.isPresent()) { // isPresent() metodu, Optional nesnesinin bir değer içerip içermediğini kontrol eder ve bir boolean değer döner.
-			System.out.println(musteri);
-		} else {
-			System.out.println("Müşteri bulunamadı.");
+		while (true) {
+			System.out.println("Aranacak Müşteri ID:");
+			String musteriID = scanner.nextLine();
+			if (!isValidID(musteriID)) {
+				System.out.println("Geçersiz ID formatı. Lütfen geçerli bir ID girin.");
+				continue;
+			}
+			Musteri musteri = musteriService.musteriIDileAra(musteriID);
+			if (musteri != null) {
+				System.out.println("Müşteri ID: " + musteri.getId() + ", İsim: " + musteri.getAdi() + ", Soyisim: " + musteri.getSoyadi() + ", Telefon: " + musteri.getTelefon() + ", Mail: " + musteri.getMail());
+				break;
+			} else {
+				System.out.println("Müşteri bulunamadı. Lütfen geçerli bir ID girin.");
+			}
 		}
 	}
 	
 	private void musteriAdiIleAra() {
-		System.out.print("Müşteri Adı: ");
-		String isim = scanner.nextLine();
-		List<Musteri> musteriler = musteriService.musteriIsimIleAra(isim);
-		if (musteriler.isEmpty()) {
-			System.out.println("Bu isimle müşteri bulunamadı.");
-		} else {
-			for (Musteri musteri : musteriler) {
-				System.out.println(musteri);
+		while (true) {
+			System.out.print("Müşteri Adı: ");
+			String isim = scanner.nextLine();
+			if (isim == null || isim.trim().isEmpty()) {
+				System.out.println("Geçersiz isim formatı. Lütfen geçerli bir isim girin.");
+				continue;
+			}
+			List<Musteri> musteriler = musteriService.musteriIsimIleAra(isim);
+			if (musteriler.isEmpty()) {
+				System.out.println("Bu isimle müşteri bulunamadı.");
+			} else {
+				for (Musteri musteri : musteriler) {
+					System.out.println(musteri);
+				}
+				break;
 			}
 		}
 	}
@@ -186,5 +208,9 @@ public class MusteriIslemleri {
 	
 	private boolean isValidMail(String mail) {
 		return mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+	}
+	
+	private boolean isValidID(String id) {
+		return id != null && !id.trim().isEmpty(); // Geçerlilik kontrolünü ihtiyaca göre genişletebilirsiniz
 	}
 }

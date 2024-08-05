@@ -1,5 +1,7 @@
 package org.Maraton2.Services;
 
+import org.Maraton2.Enums.Durum;
+import org.Maraton2.Enums.RestoranTipi;
 import org.Maraton2.Models.Restoran;
 import org.Maraton2.Repositories.RestoranRepository;
 
@@ -38,5 +40,13 @@ public class RestoranService {
 	
 	public void kapasiteAzalt(String restoranID) {
 		restoranRepository.kapasiteAzalt(restoranID);
+	}
+	
+	public List<Restoran> restoranDurumunaGoreAra(Durum durum) {
+		return restoranRepository.restoranDurumunaGoreAra(durum);
+	}
+	
+	public List<Restoran> restoranTipineGoreAra(RestoranTipi restoranTipi) {
+		return restoranRepository.restoranTipineGoreAra(restoranTipi);
 	}
 }

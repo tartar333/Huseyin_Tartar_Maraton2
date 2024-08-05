@@ -25,39 +25,51 @@ public class RestoranIslemleri {
 				System.out.println("1. Restoran Ekle");
 				System.out.println("2. Restoran Sil");
 				System.out.println("3. Restoranları Listele");
+				System.out.println("4. Restoran Ara");
 				System.out.println("0. Ana Menüye Dön");
 				
 				int secim = getValidIntegerInput();
 				
 				switch (secim) {
 					case 1:
+						scanner.nextLine();
 						restoranEkle();
 						break;
 					case 2:
+						scanner.nextLine();
 						restoranSil();
 						break;
 					case 3:
+						scanner.nextLine();
 						restoranlariListele();
 						break;
+					case 4:
+						scanner.nextLine();
+						restoranAramaMenu();
+						break;
 					case 0:
-						return; // Ana menüye dön
+						return;
 					default:
 						System.out.println("Geçersiz seçim, lütfen tekrar deneyin.");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra input buffer'ı temizle
+				scanner.nextLine();
 			}
 		}
 	}
 	
 	public void restoranEkle() {
-		System.out.println("Yeni Restoran ID:");
-		String restoranID = scanner.nextLine();
-		// ID kontrolü
-		if (restoranService.restoranIDVarMi(restoranID)) {
-			System.out.println("Bu ID ile zaten bir restoran mevcut. Lütfen başka bir ID girin.");
-			return;
+		String restoranID;
+		while (true) {
+			System.out.println("Yeni Restoran ID:");
+			restoranID = scanner.nextLine();
+			// ID kontrolü
+			if (restoranService.restoranIDVarMi(restoranID)) {
+				System.out.println("Bu ID ile zaten bir restoran mevcut. Lütfen başka bir ID girin.");
+			} else {
+				break;
+			}
 		}
 		
 		System.out.println("Restoran Adı:");
@@ -66,26 +78,30 @@ public class RestoranIslemleri {
 		System.out.println("Restoran Adresi:");
 		String adres = scanner.nextLine();
 		
-		System.out.println("Restoran Telefon Numarası (05 ile başlamalı ve 11 haneli):");
-		String telefonNumarasi = scanner.nextLine();
-		
-		if (!isValidTelefonNumarasi(telefonNumarasi)) {
-			System.out.println("Telefon numarası formatı hatalı. Lütfen 05 ile başlayan ve 11 haneli bir numara girin.");
-			return;
+		String telefonNumarasi;
+		while (true) {
+			System.out.println("Restoran Telefon Numarası (05 ile başlamalı ve 11 haneli):");
+			telefonNumarasi = scanner.nextLine();
+			if (isValidTelefonNumarasi(telefonNumarasi)) {
+				break;
+			} else {
+				System.out.println("Telefon numarası formatı hatalı. Lütfen 05 ile başlayan ve 11 haneli bir numara girin.");
+			}
 		}
 		
-		System.out.println("Restoran Kapasitesi:");
-		int kapasite = getValidIntegerInput();
-		
-		if (kapasite < 0) {
-			System.out.println("Kapasite negatif olamaz.");
-			return;
+		int kapasite;
+		while (true) {
+			System.out.println("Restoran Kapasitesi:");
+			kapasite = getValidIntegerInput();
+			if (kapasite >= 0) {
+				break;
+			} else {
+				System.out.println("Kapasite negatif olamaz.");
+			}
 		}
 		
-		System.out.println("Restoran Tipi (1. BALIK_RESTAURANI, 2. KEBAP_RESTAURANI, 3. EV_YEMEKLERI):");
 		RestoranTipi restoranTipi = getValidRestoranTipi();
 		
-		System.out.println("Restoran Durumu (1. ACIK, 2. KAPALI):");
 		Durum durum = getValidDurum();
 		
 		Restoran restoran = new Restoran(restoranID, restoranAdi, adres, telefonNumarasi, kapasite, durum, restoranTipi);
@@ -93,19 +109,21 @@ public class RestoranIslemleri {
 		System.out.println("Restoran başarıyla eklendi.");
 	}
 	
-	private void restoranSil() {
-		System.out.println("Silinecek Restoranın ID'si:");
-		String restoranID = scanner.nextLine();
-		
-		if (restoranService.restoranIDVarMi(restoranID)) {
-			restoranService.restoranSil(restoranID);
-			System.out.println("Restoran silindi.");
-		} else {
-			System.out.println("Bu ID ile bir restoran bulunamadı.");
+	public void restoranSil() {
+		while (true) {
+			System.out.println("Silinecek Restoranın ID'si:");
+			String restoranID = scanner.nextLine();
+			if (restoranService.restoranIDVarMi(restoranID)) {
+				restoranService.restoranSil(restoranID);
+				System.out.println("Restoran silindi.");
+				break;
+			} else {
+				System.out.println("Bu ID ile bir restoran bulunamadı. Lütfen geçerli bir ID girin.");
+			}
 		}
 	}
 	
-	private void restoranlariListele() {
+	public void restoranlariListele() {
 		List<Restoran> restoranlar = restoranService.restoranlariListele();
 		if (restoranlar.isEmpty()) {
 			System.out.println("Listelenecek restoran bulunamadı.");
@@ -113,6 +131,70 @@ public class RestoranIslemleri {
 			for (Restoran restoran : restoranlar) {
 				System.out.println(restoran);
 			}
+		}
+	}
+	
+	public void restoranAramaMenu() {
+		while (true) {
+			System.out.println("Restoran Arama:");
+			System.out.println("1. Restoran Tipine Göre Ara");
+			System.out.println("2. Restoran Durumuna Göre Ara");
+			System.out.println("3. Restoran ID'sine Göre Ara");
+			System.out.println("0. Geri Dön");
+			
+			int secim = getValidIntegerInput();
+			scanner.nextLine();
+			
+			switch (secim) {
+				case 1:
+					restoranTipineGoreAra();
+					break;
+				case 2:
+					restoranDurumunaGoreAra();
+					break;
+				case 3:
+					restoranIDyeGoreAra();
+					break;
+				case 0:
+					return;
+				default:
+					System.out.println("Geçersiz seçim, lütfen tekrar deneyin.");
+			}
+		}
+	}
+	
+	public void restoranTipineGoreAra() {
+		RestoranTipi restoranTipi = getValidRestoranTipi();
+		List<Restoran> restoranlar = restoranService.restoranTipineGoreAra(restoranTipi);
+		if (restoranlar.isEmpty()) {
+			System.out.println("Belirtilen tipte restoran bulunamadı.");
+		} else {
+			for (Restoran restoran : restoranlar) {
+				System.out.println(restoran);
+			}
+		}
+	}
+	
+	public void restoranDurumunaGoreAra() {
+		Durum durum = getValidDurum();
+		List<Restoran> restoranlar = restoranService.restoranDurumunaGoreAra(durum);
+		if (restoranlar.isEmpty()) {
+			System.out.println("Belirtilen durumda restoran bulunamadı.");
+		} else {
+			for (Restoran restoran : restoranlar) {
+				System.out.println(restoran);
+			}
+		}
+	}
+	
+	public void restoranIDyeGoreAra() {
+		System.out.println("Aranacak Restoranın ID'si:");
+		String restoranID = scanner.nextLine();
+		Restoran restoran = restoranService.restoranIDileAra(restoranID);
+		if (restoran == null) {
+			System.out.println("Bu ID ile bir restoran bulunamadı.");
+		} else {
+			System.out.println(restoran);
 		}
 	}
 	
@@ -126,47 +208,41 @@ public class RestoranIslemleri {
 				return scanner.nextInt();
 			} catch (InputMismatchException e) {
 				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra input buffer'ı temizle
+				scanner.nextLine();
 			}
 		}
 	}
 	
 	private RestoranTipi getValidRestoranTipi() {
 		while (true) {
-			try {
-				int tipSecim = getValidIntegerInput();
-				switch (tipSecim) {
-					case 1:
-						return RestoranTipi.BALIK_RESTAURANI;
-					case 2:
-						return RestoranTipi.KEBAP_RESTAURANI;
-					case 3:
-						return RestoranTipi.EV_YEMEKLERI;
-					default:
-						System.out.println("Geçersiz seçenek. Lütfen 1, 2 veya 3 girin.");
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra input buffer'ı temizle
+			System.out.println("Restoran Tipi (1. BALIK_RESTAURANI, 2. KEBAP_RESTAURANI, 3. EV_YEMEKLERI):");
+			System.out.print("Lütfen Birini Seciniz :");
+			int tipSecim = getValidIntegerInput();
+			switch (tipSecim) {
+				case 1:
+					return RestoranTipi.BALIK_RESTAURANI;
+				case 2:
+					return RestoranTipi.KEBAP_RESTAURANI;
+				case 3:
+					return RestoranTipi.EV_YEMEKLERI;
+				default:
+					System.out.println("Geçersiz seçenek. Lütfen 1, 2 veya 3 girin.");
 			}
 		}
 	}
 	
 	private Durum getValidDurum() {
 		while (true) {
-			try {
-				int durumSecim = getValidIntegerInput();
-				switch (durumSecim) {
-					case 1:
-						return Durum.ACIK;
-					case 2:
-						return Durum.KAPALI;
-					default:
-						System.out.println("Geçersiz seçenek. Lütfen 1 veya 2 girin.");
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra input buffer'ı temizle
+			System.out.println("Restoran Durumu (1. ACIK, 2. KAPALI):");
+			System.out.print("Lütfen Birini Seciniz :");
+			int durumSecim = getValidIntegerInput();
+			switch (durumSecim) {
+				case 1:
+					return Durum.ACIK;
+				case 2:
+					return Durum.KAPALI;
+				default:
+					System.out.println("Geçersiz seçenek. Lütfen 1 veya 2 girin.");
 			}
 		}
 	}

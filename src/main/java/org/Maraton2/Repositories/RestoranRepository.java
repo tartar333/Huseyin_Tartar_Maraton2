@@ -1,10 +1,13 @@
 package org.Maraton2.Repositories;
 
+import org.Maraton2.Enums.Durum;
+import org.Maraton2.Enums.RestoranTipi;
 import org.Maraton2.Models.Restoran;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class RestoranRepository {
 	private final List<Restoran> restoranlar = new ArrayList<>();
@@ -43,5 +46,17 @@ public class RestoranRepository {
 				restoran.setKapasite(mevcutKapasite - 1);
 			}
 		});
+	}
+	
+	public List<Restoran> restoranDurumunaGoreAra(Durum durum) {
+		return restoranlar.stream()
+                          .filter(r -> r.getDurum().equals(durum))
+                          .collect(Collectors.toList());
+	}
+	
+	public List<Restoran> restoranTipineGoreAra(RestoranTipi restoranTipi) {
+		return restoranlar.stream()
+                          .filter(r -> r.getTipi().equals(restoranTipi))
+                          .collect(Collectors.toList());
 	}
 }

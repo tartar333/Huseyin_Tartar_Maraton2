@@ -15,7 +15,7 @@ public class MusteriService {
 		this.musteriRepository = new MusteriRepository();
 	}
 	
-	public Optional<Musteri> musteriIDileAra(String musteriID) {
+	public Musteri musteriIDileAra(String musteriID) {
 		return musteriRepository.musteriIDileAra(musteriID);
 	}
 	
