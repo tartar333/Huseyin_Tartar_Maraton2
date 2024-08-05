@@ -23,7 +23,6 @@ public class MusteriRepository {
 		                 .findFirst()
 		                 .orElse(null);
 	}
-	
 	public List<Musteri> musterileriListele() {
 		return new ArrayList<>(musteriler);
 	}
@@ -40,5 +39,9 @@ public class MusteriRepository {
 		                     .findFirst()
 		                     .orElse(null);
 	}
-
+	
+	public boolean musteriIDVarMi(String musteriID) {
+		return musteriler.stream()
+                         .anyMatch(m -> m.getId().equals(musteriID));
+	}
 }

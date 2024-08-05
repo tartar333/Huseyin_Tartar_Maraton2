@@ -7,45 +7,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MusteriService {
+	private final MusteriRepository musteriRepository;
 	private final List<Musteri> musteriler = new ArrayList<>();
+	
+	public MusteriService() {
+		this.musteriRepository = new MusteriRepository();
+	}
+	
 	public Musteri musteriIDileAra(String musteriID) {
-		return musteriler.stream()
-		                     .filter(musteri -> musteri.getId().equals(musteriID))
-		                     .findFirst()
-		                     .orElse(null);
+		return musteriRepository.musteriIDileAra(musteriID);
 	}
+	
 	public void musteriEkle(Musteri musteri) {
-		musteriler.add(musteri);
+		musteriRepository.musteriEkle(musteri);
 	}
-
+	
 	
 	public Musteri musteriAra(String musteriID) {
-		
-		return musteriIDileAra(musteriID);
+		return musteriRepository.musteriIDileAra(musteriID);
 	}
-
+	
 	
 	public void musteriSil(String id) {
-		musteriler.removeIf(musteri -> musteri.getId().equals(id));
+		musteriRepository.musteriSil(id);
 	}
 	
 	public List<Musteri> musteriIsimIleAra(String isim) {
-		List<Musteri> sonuc = new ArrayList<>();
-		for (Musteri musteri : musteriler) {
-			if (musteri.getIsim().equalsIgnoreCase(isim)) {
-				sonuc.add(musteri);
-			}
-		}
-		return sonuc;
+		return musteriRepository.musteriIsimIleAra(isim);
 	}
 	
 	
 	public List<Musteri> musterileriListele() {
-		return new ArrayList<>(musteriler);
+		return musteriRepository.musterileriListele();
 	}
 	
 	public boolean musteriIDVarMi(String musteriID) {
-		return musteriler.stream()
-                         .anyMatch(m -> m.getId().equals(musteriID));
+		return musteriRepository.musteriIDVarMi(musteriID);
 	}
 }

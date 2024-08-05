@@ -24,7 +24,6 @@ public class Runner {
 		RezervasyonIslemleri rezervasyonIslemleri = new RezervasyonIslemleri(scanner, rezervasyonService, musteriService, restoranService);
 		Scanner scanner = new Scanner(System.in);
 		MusteriService musteriService = new MusteriService();
-		
 		MusteriIslemleri musteriIslemleri = new MusteriIslemleri(musteriService, scanner);
 		
 		while (true) {

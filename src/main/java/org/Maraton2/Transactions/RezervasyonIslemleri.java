@@ -74,7 +74,7 @@ public class RezervasyonIslemleri {
 		
 		System.out.println("Müşteri ID:");
 		String musteriID = scanner.nextLine();
-		Musteri musteri = musteriService.musteriAra(musteriID);
+		Musteri musteri = musteriService.musteriIDileAra(musteriID);
 		if (musteri == null) {
 			System.out.println("Müşteri bulunamadı.");
 			return;
@@ -111,6 +111,7 @@ public class RezervasyonIslemleri {
 		// Restoran kapasitesini güncelle
 		restoranService.restoranKapasitesiniGuncelle(restoranID, restoran.getKapasite() - 1);
 	}
+
 	
 	private void rezervasyonSil() {
 		System.out.println("Silinecek Rezervasyon ID'si:");

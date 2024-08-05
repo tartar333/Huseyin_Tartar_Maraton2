@@ -26,7 +26,7 @@ public class MusteriIslemleri {
 			System.out.println("0. Ana Menüye Dön");
 			
 			int secim = scanner.nextInt();
-			scanner.nextLine(); // Yeni satırı temizle
+			scanner.nextLine();
 			
 			switch (secim) {
 				case 1:
