@@ -1,6 +1,6 @@
-package org.Maraton2.Repositories.Entities.Interfaces;
+package org.Maraton2.Interfaces;
 
-import org.Maraton2.Repositories.Entities.Musteri;
+import org.Maraton2.Models.Musteri;
 import java.util.List;
 
 public interface IMusteriYonetimi {

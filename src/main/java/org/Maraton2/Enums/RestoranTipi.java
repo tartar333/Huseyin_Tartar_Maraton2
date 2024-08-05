@@ -1,4 +1,4 @@
-package org.Maraton2.Repositories.Entities.Enums;
+package org.Maraton2.Enums;
 
 public enum RestoranTipi {
 	BALIK_RESTAURANI,

@@ -1,7 +1,7 @@
-package org.Maraton2.Repositories.Entities;
+package org.Maraton2.Models;
 
-import org.Maraton2.Repositories.Entities.Enums.Durum;
-import org.Maraton2.Repositories.Entities.Enums.RestoranTipi;
+import org.Maraton2.Enums.Durum;
+import org.Maraton2.Enums.RestoranTipi;
 
 public class Restoran {
 	private String restoranID;
@@ -21,6 +21,24 @@ public class Restoran {
 		this.kapasite = kapasite;
 		this.durum = durum;
 		this.tipi = tipi;
+	}
+	
+	public Restoran(String restoranID, String adi, RestoranTipi tipi, int kapasite, Durum durum) {
+		this.restoranID = restoranID;
+        this.adi = adi;
+        this.tipi = tipi;
+        this.kapasite = kapasite;
+        this.durum = durum;
+	}
+	
+	public Restoran(String restoranID, String adi, RestoranTipi tipi, int kapasite, Durum durum, String adres, String telefon) {
+		this.restoranID = restoranID;
+        this.adi = adi;
+        this.tipi = tipi;
+        this.kapasite = kapasite;
+        this.durum = durum;
+        this.adres = adres;
+        this.telefon = telefon;
 	}
 	
 	

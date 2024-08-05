@@ -1,6 +1,7 @@
-package org.Maraton2.Repositories.Entities;
+package org.Maraton2.Models;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Rezervasyon {
 	private String rezervasyonID;
@@ -9,12 +10,28 @@ public class Rezervasyon {
 	private LocalDateTime rezervasyonTarihi;
 	private int kapasite;
 	
-	public Rezervasyon(String rezervasyonID, String musteriID, String restoranID, LocalDateTime rezervasyonTarihi, int kapasite) {
+	public Rezervasyon(String rezervasyonID, String musteriID, String restoranID) {
 		this.rezervasyonID = rezervasyonID;
 		this.musteriID = musteriID;
 		this.restoranID = restoranID;
 		this.rezervasyonTarihi = rezervasyonTarihi;
 		this.kapasite = kapasite;
+	}
+	
+	public Rezervasyon(Musteri musteri, Restoran restoran, LocalDateTime tarihSaat) {
+		this.rezervasyonID = UUID.randomUUID().toString();
+        this.musteriID = musteri.getId();
+        this.restoranID = restoran.getRestoranID();
+        this.rezervasyonTarihi = tarihSaat;
+        this.kapasite = restoran.getKapasite();
+	}
+	
+	public Rezervasyon(String rezervasyonID, String musteriID, String restoranID, LocalDateTime rezervasyonTarihi) {
+		this.rezervasyonID = rezervasyonID;
+        this.musteriID = musteriID;
+        this.restoranID = restoranID;
+        this.rezervasyonTarihi = rezervasyonTarihi;
+        this.kapasite = 0; // Rezervasyon kapasitesi 0 olarak başlangıç yapıyoruz
 	}
 	
 	public String getRezervasyonID() {

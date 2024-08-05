@@ -1,6 +1,6 @@
-package org.Maraton2.Repositories.Entities.Interfaces;
+package org.Maraton2.Interfaces;
 
-import org.Maraton2.Repositories.Entities.Restoran;
+import org.Maraton2.Models.Restoran;
 import java.util.List;
 
 public interface IRestoranYonetimi {
