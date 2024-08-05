@@ -41,6 +41,14 @@ public class Restoran {
         this.telefon = telefon;
 	}
 	
+	public Restoran(String restoranID, String restoranAdi, String adres, String telefonNumarasi, int kapasite) {
+		this.restoranID = restoranID;
+        this.adi = restoranAdi;
+        this.adres = adres;
+        this.telefon = telefonNumarasi;
+        this.kapasite = kapasite;
+	}
+	
 	
 	public String getRestoranID() {
 		return restoranID;

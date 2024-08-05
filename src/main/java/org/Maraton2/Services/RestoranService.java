@@ -49,4 +49,7 @@ public class RestoranService {
 	public void restoranGuncelle(Restoran restoran) {
 	
 	}
+	public boolean restoranIDVarMi(String restoranID) {
+		return restoranRepo.restoranIDVarMi(restoranID);
+	}
 }

@@ -35,6 +35,7 @@ public class Musteri {
 		return mail;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Müşteri ID: " + id + ", İsim: " + isim + ", Soyisim: " + soyisim + ", Telefon: " + telefon + ", Mail: " + mail;

@@ -45,24 +45,42 @@ public class RestoranIslemleri {
 		}
 	}
 	
-	private void restoranEkle() {
-		System.out.println("Restoran ID:");
+	public void restoranEkle() {
+		System.out.println("Yeni Restoran ID:");
 		String restoranID = scanner.nextLine();
 		
+		// ID kontrolü
+		if (restoranService.restoranIDVarMi(restoranID)) {
+			System.out.println("Bu ID ile zaten bir restoran mevcut. Lütfen başka bir ID girin.");
+			return;
+		}
+		
 		System.out.println("Restoran Adı:");
-		String adi = scanner.nextLine();
+		String restoranAdi = scanner.nextLine();
 		
-		System.out.println("Restoran Tipi (BALIK_RESTAURANI, KEBAP_RESTAURANI, EV_YEMEKLERI):");
-		String tipiStr = scanner.nextLine();
-		RestoranTipi tipi = RestoranTipi.valueOf(tipiStr.toUpperCase());
+		System.out.println("Restoran Adresi:");
+		String adres = scanner.nextLine();
 		
-		System.out.println("Kapasite:");
+		System.out.println("Restoran Telefon Numarası (05 ile başlamalı ve 11 haneli):");
+		String telefonNumarasi = scanner.nextLine();
+		
+		if (!telefonNumarasi.matches("05\\d9}")) {
+			System.out.println("Telefon numarası formatı hatalı. Lütfen 05 ile başlayan ve 11 haneli bir numara girin.");
+			return;
+		}
+		
+		System.out.println("Restoran Kapasitesi:");
 		int kapasite = scanner.nextInt();
-		scanner.nextLine();
+		scanner.nextLine(); // Yeni satırı temizle
 		
-		Restoran restoran = new Restoran(restoranID, adi, tipi, kapasite, Durum.ACIK);
+		if (kapasite < 0) {
+			System.out.println("Kapasite negatif olamaz.");
+			return;
+		}
+		
+		Restoran restoran = new Restoran(restoranID, restoranAdi, adres, telefonNumarasi, kapasite);
 		restoranService.restoranEkle(restoran);
-		System.out.println("Restoran eklendi.");
+		System.out.println("Restoran başarıyla eklendi.");
 	}
 	
 	private void restoranSil() {

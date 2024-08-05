@@ -49,42 +49,38 @@ public class MusteriIslemleri {
 		}
 	}
 	
-	private void musteriEkle() {
-		// Yeni müşteri ekleme işlemi
-		System.out.println("Yeni Müşteri Bilgilerini Girin:");
+	public void musteriEkle() {
+		System.out.println("Yeni Müşteri ID:");
+		String musteriID = scanner.nextLine();
 		
-		System.out.print("Müşteri ID: ");
-		String id = scanner.nextLine();
+		// ID kontrolü
+		if (musteriService.musteriIDVarMi(musteriID)) {
+			System.out.println("Bu ID ile zaten bir müşteri mevcut. Lütfen başka bir ID girin.");
+			return;
+		}
 		
-		System.out.print("İsim: ");
-		String isim = scanner.nextLine();
+		System.out.println("Müşteri Adı:");
+		String ad = scanner.nextLine();
 		
-		System.out.print("Soyisim: ");
-		String soyisim = scanner.nextLine();
+		System.out.println("Müşteri Soyadı:");
+		String soyad = scanner.nextLine();
 		
-		System.out.print("Telefon (05XXXXXXX): ");
-		String telefon = scanner.nextLine();
+		System.out.println("Müşteri Telefon Numarası (05 ile başlamalı ve 11 haneli):");
+		String telefonNumarasi = scanner.nextLine();
 		
-		System.out.print("Mail: ");
+		if (!telefonNumarasi.matches("05\\d{9}")) {
+			System.out.println("Telefon numarası formatı hatalı. Lütfen 05 ile başlayan ve 11 haneli bir numara girin.");
+			return;
+		}
+		
+		System.out.println("Müşteri Mail Adresi:");
 		String mail = scanner.nextLine();
 		
-		// Telefon numarasının doğru formatta olduğunu kontrol edin
-		if (!telefon.matches("^05\\d{9}$")) {
-			System.out.println("Geçersiz telefon numarası. Lütfen '05' ile başlayan 11 haneli bir numara girin.");
-			return;
-		}
-		
-		// Mail adresinin geçerli olduğunu kontrol edin
-		if (!mail.matches("^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$")) {
-			System.out.println("Geçersiz mail adresi.");
-			return;
-		}
-		
-		Musteri musteri = new Musteri(id, isim, soyisim, telefon, mail);
+		Musteri musteri = new Musteri(musteriID, ad, soyad, telefonNumarasi, mail);
 		musteriService.musteriEkle(musteri);
 		System.out.println("Müşteri başarıyla eklendi.");
 	}
-	
+
 	private void musteriSil() {
 		// Müşteri silme işlemi
 		System.out.println("Silinecek Müşterinin ID'si:");

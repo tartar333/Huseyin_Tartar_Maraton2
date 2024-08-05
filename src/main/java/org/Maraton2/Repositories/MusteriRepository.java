@@ -2,6 +2,7 @@ package org.Maraton2.Repositories;
 
 import org.Maraton2.Models.Musteri;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,9 +34,11 @@ public class MusteriRepository {
 		                 .collect(Collectors.toList());
 	}
 	
-	public List<Musteri> musteriIDileAra(String musteriID) {
+	public Musteri musteriIDileAra(String musteriID) {
 		return musteriler.stream()
-                         .filter(m -> m.getId().equals(musteriID))
-                         .collect(Collectors.toList());
+		                     .filter(musteri -> musteri.getId().equals(musteriID))
+		                     .findFirst()
+		                     .orElse(null);
 	}
+
 }

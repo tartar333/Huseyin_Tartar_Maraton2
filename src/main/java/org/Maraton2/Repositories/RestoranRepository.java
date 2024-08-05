@@ -53,4 +53,9 @@ public class RestoranRepository {
 			restoran.setKapasite(yeniKapasite);
 		}
 	}
+	
+	public boolean restoranIDVarMi(String restoranID) {
+		return restoranlar.stream()
+                          .anyMatch(r -> r.getRestoranID().equals(restoranID));
+	}
 }
