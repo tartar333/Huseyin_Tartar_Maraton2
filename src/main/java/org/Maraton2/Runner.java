@@ -52,7 +52,7 @@ public class Runner {
 					break;
 				case 0:
 					System.out.println("Çıkılıyor...");
-					return; // Programdan çıkış
+					return;
 				default:
 					System.out.println("Geçersiz seçim, lütfen tekrar deneyin.");
 			}
