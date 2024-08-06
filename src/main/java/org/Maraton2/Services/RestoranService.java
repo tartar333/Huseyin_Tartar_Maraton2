@@ -34,9 +34,6 @@ public class RestoranService {
 		return restoranRepository.restoranIDVarMi(restoranID);
 	}
 	
-	public void restoranKapasitesiniGuncelle(String restoranID, int yeniKapasite) {
-		restoranRepository.restoranKapasitesiniGuncelle(restoranID, yeniKapasite);
-	}
 	
 	public void kapasiteAzalt(String restoranID) {
 		restoranRepository.kapasiteAzalt(restoranID);

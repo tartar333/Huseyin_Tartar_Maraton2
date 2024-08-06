@@ -35,10 +35,6 @@ public class RestoranRepository {
 		                  .anyMatch(r -> r.getRestoranID().equals(restoranID));
 	}
 	
-	public void restoranKapasitesiniGuncelle(String restoranID, int yeniKapasite) {
-		restoranIDileAra(restoranID).ifPresent(restoran -> restoran.setKapasite(yeniKapasite));
-	}
-	
 	public void kapasiteAzalt(String restoranID) {
 		restoranIDileAra(restoranID).ifPresent(restoran -> {
 			int mevcutKapasite = restoran.getKapasite();
