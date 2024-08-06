@@ -1,18 +1,17 @@
 package org.Maraton2.Services;
 
+import org.Maraton2.Interfaces.IMusteriService;
 import org.Maraton2.Models.Musteri;
 import org.Maraton2.Repositories.MusteriRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class MusteriService {
+public class MusteriService implements IMusteriService {
 	private final MusteriRepository musteriRepository;
-	private final List<Musteri> musteriler = new ArrayList<>();
 	
 	public MusteriService(MusteriRepository musteriRepository) {
-		this.musteriRepository = new MusteriRepository();
+		this.musteriRepository = musteriRepository;
 	}
 	
 	public Musteri musteriIDileAra(String musteriID) {

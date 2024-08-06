@@ -1,5 +1,6 @@
 package org.Maraton2.Transactions;
 
+import org.Maraton2.Interfaces.IMusteriService;
 import org.Maraton2.Models.Musteri;
 import org.Maraton2.Services.MusteriService;
 
@@ -9,10 +10,10 @@ import java.util.Scanner;
 
 public class MusteriIslemleri {
 	
-	private final MusteriService musteriService;
+	private final IMusteriService musteriService;
 	private final Scanner scanner;
 	
-	public MusteriIslemleri(MusteriService musteriService, Scanner scanner) {
+	public MusteriIslemleri(IMusteriService musteriService, Scanner scanner) {
 		this.musteriService = musteriService;
 		this.scanner = scanner;
 	}

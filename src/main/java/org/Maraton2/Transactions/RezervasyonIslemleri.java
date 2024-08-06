@@ -1,5 +1,8 @@
 package org.Maraton2.Transactions;
 
+import org.Maraton2.Interfaces.IMusteriService;
+import org.Maraton2.Interfaces.IRestoranService;
+import org.Maraton2.Interfaces.IRezervasyonService;
 import org.Maraton2.Models.Musteri;
 import org.Maraton2.Models.Restoran;
 import org.Maraton2.Models.Rezervasyon;
@@ -18,12 +21,12 @@ public class RezervasyonIslemleri {
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
 	private final Scanner scanner;
-	private final RezervasyonService rezervasyonService;
-	private final MusteriService musteriService;
-	private final RestoranService restoranService;
+	private final IRezervasyonService rezervasyonService;
+	private final IMusteriService musteriService;
+	private final IRestoranService restoranService;
 	
-	public RezervasyonIslemleri(Scanner scanner, RezervasyonService rezervasyonService, MusteriService musteriService,
-	                            RestoranService restoranService) {
+	public RezervasyonIslemleri(Scanner scanner, IRezervasyonService rezervasyonService, IMusteriService musteriService,
+	                            IRestoranService restoranService) {
 		this.scanner = scanner;
 		this.rezervasyonService = rezervasyonService;
 		this.musteriService = musteriService;

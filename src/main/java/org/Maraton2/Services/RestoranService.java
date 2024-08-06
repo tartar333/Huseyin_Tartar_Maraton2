@@ -2,12 +2,13 @@ package org.Maraton2.Services;
 
 import org.Maraton2.Enums.Durum;
 import org.Maraton2.Enums.RestoranTipi;
+import org.Maraton2.Interfaces.IRestoranService;
 import org.Maraton2.Models.Restoran;
 import org.Maraton2.Repositories.RestoranRepository;
 
 import java.util.List;
 
-public class RestoranService {
+public class RestoranService implements IRestoranService {
 	private final RestoranRepository restoranRepository;
 	
 	public RestoranService(RestoranRepository restoranRepository) {

@@ -2,6 +2,7 @@ package org.Maraton2.Models;
 
 import org.Maraton2.Enums.Durum;
 import org.Maraton2.Enums.RestoranTipi;
+import org.Maraton2.Interfaces.IRestoranService;
 import org.Maraton2.Repositories.RestoranRepository;
 import org.Maraton2.Services.RestoranService;
 
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class RestoranOlusturucu {
 	private final Scanner scanner;
-	private final RestoranService restoranService;
+	private final IRestoranService restoranService;
 	private static final String[] RESTORAN_ADLARI = {"Lezzet Durağı", "Gurme Köşe", "Cafe Mavi", "Yemek Sarayı", "Simit Sarayı", "Lezzet Kosku" +
 			"Gurme Palace"};
 	private static final RestoranTipi[] RESTORAN_TIPLERI = RestoranTipi.values();
@@ -19,7 +20,7 @@ public class RestoranOlusturucu {
 	private static final String[] SEHIRLER = {"Sehir X", "Sehir Y", "Sehir Z"};
 	private static final Random RANDOM = new Random();
 	
-	public RestoranOlusturucu(Scanner scanner, RestoranService restoranService) {
+	public RestoranOlusturucu(Scanner scanner, IRestoranService restoranService) {
 		this.scanner = scanner;
 		this.restoranService = restoranService;
 	}
@@ -64,7 +65,7 @@ public class RestoranOlusturucu {
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		RestoranRepository restoranRepository = null;
+		RestoranRepository restoranRepository= null;
 		RestoranService restoranService = new RestoranService(restoranRepository); // Service sınıfı uygun şekilde yapılandırılmalı
 		
 		RestoranOlusturucu olusturucu = new RestoranOlusturucu(scanner, restoranService);

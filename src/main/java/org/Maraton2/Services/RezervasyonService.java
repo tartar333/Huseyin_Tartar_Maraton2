@@ -1,13 +1,13 @@
 package org.Maraton2.Services;
 
+import org.Maraton2.Interfaces.IRezervasyonService;
 import org.Maraton2.Models.Rezervasyon;
 import org.Maraton2.Repositories.RezervasyonRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-public class RezervasyonService {
+public class RezervasyonService implements IRezervasyonService {
 	private final RezervasyonRepository rezervasyonRepository;
 	
 	public RezervasyonService(RezervasyonRepository rezervasyonRepository) {

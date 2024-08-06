@@ -2,6 +2,7 @@ package org.Maraton2.Transactions;
 
 import org.Maraton2.Enums.Durum;
 import org.Maraton2.Enums.RestoranTipi;
+import org.Maraton2.Interfaces.IRestoranService;
 import org.Maraton2.Models.Restoran;
 import org.Maraton2.Services.RestoranService;
 
@@ -11,9 +12,9 @@ import java.util.Scanner;
 
 public class RestoranIslemleri {
 	private final Scanner scanner;
-	private final RestoranService restoranService;
+	private final IRestoranService restoranService;
 	
-	public RestoranIslemleri(Scanner scanner, RestoranService restoranService) {
+	public RestoranIslemleri(Scanner scanner, IRestoranService restoranService) {
 		this.scanner = scanner;
 		this.restoranService = restoranService;
 	}
