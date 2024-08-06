@@ -239,7 +239,7 @@ public class RezervasyonIslemleri {
 			}
 			catch (InputMismatchException e) {
 				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra yeni giriş bekler.
+				scanner.nextLine();
 			}
 		}
 	}
