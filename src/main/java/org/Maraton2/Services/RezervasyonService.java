@@ -35,11 +35,6 @@ public class RezervasyonService {
 		return null;
 	}
 	
-	// Müşteri ID ile rezervasyonları listeleme
-	public List<Rezervasyon> musteriIDileRezervasyonlariListele(String musteriID) {
-		return rezervasyonRepository.musteriIDileRezervasyonlariListele(musteriID);
-	}
-	
 	// Tarihe göre rezervasyonları listeleme
 	public List<Rezervasyon> tarihileRezervasyonlariListele(LocalDateTime tarih) {
 		return rezervasyonRepository.tarihleRezervasyonlariListele(tarih);

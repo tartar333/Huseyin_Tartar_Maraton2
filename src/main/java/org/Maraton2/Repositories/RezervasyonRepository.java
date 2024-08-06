@@ -29,14 +29,7 @@ public class RezervasyonRepository {
 	public void rezervasyonSil(String rezervasyonID) {
 		rezervasyonlar.removeIf(r -> r.getRezervasyonID().equals(rezervasyonID));
 	}
-	
-	// Müşteri ID ile rezervasyonları listeleme
-	public List<Rezervasyon> musteriIDileRezervasyonlariListele(String musteriID) {
-		return rezervasyonlar.stream()
-		                     .filter(r -> r.getMusteriID().equals(musteriID))
-		                     .collect(Collectors.toList());
-	}
-	
+
 	// Tarihe göre rezervasyonları listeleme
 	public List<Rezervasyon> tarihleRezervasyonlariListele(LocalDateTime tarih) {
 		return rezervasyonlar.stream()
