@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class RezervasyonIslemleri {
@@ -40,7 +39,7 @@ public class RezervasyonIslemleri {
 			System.out.println("4. Rezervasyon Ara");
 			System.out.println("0. Ana Menüye Dön");
 			
-			int secim = getValidIntegerInput();
+			int secim = getValidIntegerInput(); // Kullanıcının geçerli bir sayı girmesini sağlar.
 			scanner.nextLine();
 			
 			switch (secim) {
@@ -66,10 +65,10 @@ public class RezervasyonIslemleri {
 	
 	public void rezervasyonYap() {
 		String rezervasyonID;
+		// Kullanıcının geçerli bir rezervasyon ID'si girmesini sağlar.
 		while (true) {
 			System.out.println("Rezervasyon ID:");
 			rezervasyonID = scanner.nextLine();
-			// ID kontrolü
 			if (rezervasyonService.rezervasyonIDVarMi(rezervasyonID)) {
 				System.out.println("Bu ID ile zaten bir rezervasyon mevcut. Lütfen başka bir ID girin.");
 			} else {
@@ -79,6 +78,7 @@ public class RezervasyonIslemleri {
 		
 		String musteriID;
 		Musteri musteri;
+		// Kullanıcının geçerli bir müşteri ID'si girmesini sağlar.
 		while (true) {
 			System.out.println("Müşteri ID:");
 			musteriID = scanner.nextLine();
@@ -92,6 +92,7 @@ public class RezervasyonIslemleri {
 		
 		String restoranID;
 		Restoran restoran;
+		// Kullanıcının geçerli bir restoran ID'si girmesini sağlar.
 		while (true) {
 			System.out.println("Restoran ID:");
 			restoranID = scanner.nextLine();
@@ -99,7 +100,7 @@ public class RezervasyonIslemleri {
 			if (restoran == null) {
 				System.out.println("Restoran bulunamadı. Lütfen geçerli bir restoran ID girin.");
 			} else {
-				// Restoranın kapasitesi kontrolü
+				// Restoranın kapasitesi doluysa kullanıcıyı bilgilendirir.
 				if (restoran.getKapasite() <= 0) {
 					System.out.println("Restoran kapasitesi dolu. Rezervasyon yapılamaz.");
 				} else {
@@ -109,6 +110,7 @@ public class RezervasyonIslemleri {
 		}
 		
 		LocalDateTime rezervasyonTarihi;
+		// Geçerli bir tarih ve saat formatı istenir.
 		while (true) {
 			System.out.println("Rezervasyon Tarihi ve Saati (yyyy-MM-dd HH:mm):");
 			String rezervasyonTarihiStr = scanner.nextLine();
@@ -121,8 +123,8 @@ public class RezervasyonIslemleri {
 		}
 		
 		Rezervasyon rezervasyon = new Rezervasyon(rezervasyonID, musteriID, restoranID, rezervasyonTarihi);
-		rezervasyonService.rezervasyonEkle(rezervasyon);
-		restoranService.kapasiteAzalt(restoranID);
+		rezervasyonService.rezervasyonEkle(rezervasyon); // Rezervasyonu ekler.
+		restoranService.kapasiteAzalt(restoranID); // Restoran kapasitesini azaltır.
 		System.out.println("Rezervasyon başarıyla eklendi.");
 	}
 	
@@ -157,12 +159,12 @@ public class RezervasyonIslemleri {
 			System.out.println("1. Tarihe Göre Rezervasyonları Listele");
 			System.out.println("0. Geri Dön");
 			
-			int secim = getValidIntegerInput();
+			int secim = getValidIntegerInput(); // Kullanıcının geçerli bir sayı girmesini sağlar.
 			scanner.nextLine();
 			
 			switch (secim) {
 				case 1:
-					rezervasyonTariheGoreListele();
+					rezervasyonTariheGoreListele(); // Tarihe göre rezervasyonları listeler.
 					break;
 				case 0:
 					return;
@@ -178,13 +180,13 @@ public class RezervasyonIslemleri {
 			System.out.println("Rezervasyon Tarihi (yyyy-MM-dd):");
 			String tarihStr = scanner.nextLine();
 			try {
-				tarih = LocalDateTime.parse(tarihStr + "T00:00:00"); // Saat kısmını ekleyin
+				tarih = LocalDateTime.parse(tarihStr + "T00:00:00");
 				break;
 			} catch (DateTimeParseException e) {
 				System.out.println("Tarih formatı hatalı. Lütfen belirtilen formatta girin.");
 			}
 		}
-		List<Rezervasyon> rezervasyonlar = rezervasyonService.tarihileRezervasyonlariListele(tarih);
+		List<Rezervasyon> rezervasyonlar = rezervasyonService.tarihileRezervasyonlariListele(tarih); // Tarihe göre rezervasyonları listeler.
 		if (rezervasyonlar.isEmpty()) {
 			System.out.println("Belirtilen tarihte rezervasyon bulunamadı.");
 		} else {
@@ -197,10 +199,10 @@ public class RezervasyonIslemleri {
 	private int getValidIntegerInput() {
 		while (true) {
 			try {
-				return scanner.nextInt();
+				return scanner.nextInt(); // Kullanıcının geçerli bir sayı girmesini sağlar.
 			} catch (InputMismatchException e) {
 				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine();
+				scanner.nextLine(); // Hatalı girişten sonra yeni giriş bekler.
 			}
 		}
 	}

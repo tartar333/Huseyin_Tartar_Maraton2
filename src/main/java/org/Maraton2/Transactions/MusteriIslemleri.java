@@ -43,7 +43,7 @@ public class MusteriIslemleri {
 						musteriAramaMenu();
 						break;
 					case 0:
-						return; // Ana menüye dön
+						return;
 					default:
 						System.out.println("Geçersiz seçim, lütfen tekrar deneyin.");
 				}
@@ -54,6 +54,7 @@ public class MusteriIslemleri {
 		}
 	}
 	
+	// Yeni müşteri eklemek için kullanıcıdan bilgi alır
 	public void musteriEkle() {
 		String musteriID;
 		while (true) {
@@ -63,7 +64,7 @@ public class MusteriIslemleri {
 				System.out.println("Geçersiz ID formatı. Lütfen geçerli bir ID girin.");
 				continue;
 			}
-			// ID kontrolü
+			// ID kontrolü: Aynı ID'ye sahip müşteri olup olmadığını kontrol eder
 			if (!musteriService.musteriIDVarMi(musteriID)) {
 				break;
 			} else {
@@ -93,11 +94,13 @@ public class MusteriIslemleri {
 			return;
 		}
 		
+		// Yeni müşteri oluşturulup eklenir
 		Musteri musteri = new Musteri(musteriID, ad, soyad, telefonNumarasi, mail);
 		musteriService.musteriEkle(musteri);
 		System.out.println("Müşteri başarıyla eklendi.");
 	}
 	
+	// Mevcut müşteri ID'si ile müşteriyi silmek için kullanıcıdan ID alınır
 	private void musteriSil() {
 		String musteriID;
 		while (true) {
@@ -107,6 +110,7 @@ public class MusteriIslemleri {
 				System.out.println("Geçersiz ID formatı. Lütfen geçerli bir ID girin.");
 				continue;
 			}
+			// Müşteri ID'si kontrolü
 			if (musteriService.musteriIDVarMi(musteriID)) {
 				musteriService.musteriSil(musteriID);
 				System.out.println("Müşteri silindi.");
@@ -117,13 +121,20 @@ public class MusteriIslemleri {
 		}
 	}
 	
+	// Tüm müşterileri listeleme
 	private void musterileriListele() {
 		List<Musteri> musteriler = musteriService.musterileriListele();
-		for (Musteri musteri : musteriler) {
-			System.out.println("Müşteri ID: " + musteri.getId() + ", İsim: " + musteri.getAdi() + ", Soyisim: " + musteri.getSoyadi() + ", Telefon: " + musteri.getTelefon() + ", Mail: " + musteri.getMail());
+		if (musteriler.isEmpty()) {
+			System.out.println("Listelenecek müşteri bulunamadı.");
+		} else {
+			for (Musteri musteri : musteriler) {
+				// Müşteri bilgilerini ekrana yazdırır
+				System.out.println("Müşteri ID: " + musteri.getId() + ", İsim: " + musteri.getAdi() + ", Soyisim: " + musteri.getSoyadi() + ", Telefon: " + musteri.getTelefon() + ", Mail: " + musteri.getMail());
+			}
 		}
 	}
 	
+	// Müşteri arama menüsü
 	private void musteriAramaMenu() {
 		while (true) {
 			try {
@@ -142,17 +153,18 @@ public class MusteriIslemleri {
 						musteriAdiIleAra();
 						break;
 					case 0:
-						return; // Önceki menüye dön
+						return;
 					default:
 						System.out.println("Geçersiz seçim, lütfen tekrar deneyin.");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Geçersiz giriş. Lütfen sayısal bir değer girin.");
-				scanner.nextLine(); // Hatalı girişten sonra input buffer'ı temizle
+				scanner.nextLine();
 			}
 		}
 	}
 	
+	// Müşteriyi ID'sine göre arar
 	private void musteriIDileAra() {
 		while (true) {
 			System.out.println("Aranacak Müşteri ID:");
@@ -170,7 +182,7 @@ public class MusteriIslemleri {
 			}
 		}
 	}
-	
+	//Müşteriyi adına göre arar
 	private void musteriAdiIleAra() {
 		while (true) {
 			System.out.print("Müşteri Adı: ");
@@ -191,6 +203,7 @@ public class MusteriIslemleri {
 		}
 	}
 	
+	// Sayısal girişlerin doğruluğunu kontrol eden metot
 	private int getValidIntegerInput() {
 		while (true) {
 			try {
@@ -202,15 +215,18 @@ public class MusteriIslemleri {
 		}
 	}
 	
+	// Telefon numarasının formatını kontrol eden metot
 	private boolean isValidTelefonNumarasi(String telefonNumarasi) {
-		return telefonNumarasi.matches("05\\d{9}");
+		return telefonNumarasi.matches("05\\d{9}"); // Telefon numarası 05 ile başlamalı ve 11 haneli olmalı
 	}
 	
+	// Mail adresinin formatını kontrol eden metot
 	private boolean isValidMail(String mail) {
 		return mail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 	}
 	
+	// ID'nin geçerliliğini kontrol eden metot
 	private boolean isValidID(String id) {
-		return id != null && !id.trim().isEmpty(); // Geçerlilik kontrolünü ihtiyaca göre genişletebilirsiniz
+		return id != null && !id.trim().isEmpty(); // ID'nin boş olmadığından emin olur
 	}
 }
