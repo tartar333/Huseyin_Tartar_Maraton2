@@ -23,7 +23,7 @@ Restoran oluşturma işlemini ayrı bir bileşen olarak yönetmek için tasarlad
 
 rezervasyonIDVarMi(String rezervasyonID) = Unique ID olusturabilmek ve olası cakısmaları önlemek icin.
 
-public void restoranKapasitesiniGuncelle(String restoranID, int azalanKapasite) = Her rezervasyon isleminde secilen
+public void restoranKapasitesiniGuncelle(String restoranID, int azalanKapasite) = Her rezervasyonModel isleminde secilen
 restoranın kapasitesini azaltabilmek icin yani kapasite kontrolü.
 
 public boolean isEmailValid(String email) = Gecerli mail girilip girilmediğini kontrol edebilmek icin.

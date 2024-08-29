@@ -2,8 +2,6 @@ package org.Maraton2.Models;
 
 import org.Maraton2.Enums.Durum;
 import org.Maraton2.Enums.RestoranTipi;
-import org.Maraton2.Interfaces.IRestoranService;
-import org.Maraton2.Repositories.RestoranRepository;
 import org.Maraton2.Services.RestoranService;
 
 import java.util.Random;
@@ -11,16 +9,17 @@ import java.util.Scanner;
 
 public class RestoranOlusturucu {
 	private final Scanner scanner;
-	private final IRestoranService restoranService;
-	private static final String[] RESTORAN_ADLARI = {"Lezzet Durağı", "Gurme Köşe", "Cafe Mavi", "Yemek Sarayı", "Simit Sarayı", "Lezzet Kosku" +
-			"Gurme Palace"};
+	private final RestoranService restoranService;
+	private static final String[] RESTORAN_ADLARI =
+			{"Lezzet Durağı", "Gurme Köşe", "Cafe Mavi", "Yemek Sarayı", "Simit Sarayı", "Lezzet Kosku" + "Gurme " +
+					"Palace"};
 	private static final RestoranTipi[] RESTORAN_TIPLERI = RestoranTipi.values();
 	private static final String[] CADDELER = {"Cadde 1", "Cadde 2", "Cadde 3", "Cadde 4"};
 	private static final String[] SEMTLER = {"Semt A", "Semt B", "Semt C", "Semt D"};
 	private static final String[] SEHIRLER = {"Sehir X", "Sehir Y", "Sehir Z"};
 	private static final Random RANDOM = new Random();
 	
-	public RestoranOlusturucu(Scanner scanner, IRestoranService restoranService) {
+	public RestoranOlusturucu(Scanner scanner, RestoranService restoranService) {
 		this.scanner = scanner;
 		this.restoranService = restoranService;
 	}
@@ -57,18 +56,10 @@ public class RestoranOlusturucu {
 			String adres = rastgeleAdres();
 			String telefon = rastgeleTelefon();
 			
-			Restoran restoran = new Restoran(restoranID, adi, tipi, kapasite, Durum.ACIK, adres, telefon);
-			restoranService.restoranEkle(restoran);
-			System.out.println("Restoran eklendi: " + restoran);
+			RestoranModel restoranModel = new RestoranModel(restoranID, adi, tipi, kapasite, Durum.ACIK, adres, telefon);
+			restoranService.restoranEkle(restoranModel);
+			System.out.println("Restoran eklendi: " + restoranModel);
 		}
 	}
 	
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		RestoranRepository restoranRepository= null;
-		RestoranService restoranService = new RestoranService(restoranRepository); // Service sınıfı uygun şekilde yapılandırılmalı
-		
-		RestoranOlusturucu olusturucu = new RestoranOlusturucu(scanner, restoranService);
-		olusturucu.restoranOlustur();
-	}
 }

@@ -1,40 +1,42 @@
 package org.Maraton2.Services;
 
-import org.Maraton2.Interfaces.IMusteriService;
-import org.Maraton2.Models.Musteri;
+import org.Maraton2.Models.MusteriModel;
 import org.Maraton2.Repositories.MusteriRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class MusteriService implements IMusteriService {
-	private final MusteriRepository musteriRepository;
-	
-	public MusteriService(MusteriRepository musteriRepository) {
-		this.musteriRepository = musteriRepository;
+public class MusteriService {
+	private final List<MusteriModel> musteriler = new ArrayList<>();
+
+	public void musteriEkle(MusteriModel musteriModel) {
+		musteriler.add(musteriModel);
 	}
 	
-	public Musteri musteriIDileAra(String musteriID) {
-		return musteriRepository.musteriIDileAra(musteriID);
+	public void musteriSil(String musteriID) {
+		musteriler.removeIf(m -> m.getId().equals(musteriID));
 	}
 	
-	public void musteriEkle(Musteri musteri) {
-		musteriRepository.musteriEkle(musteri);
+	public MusteriModel musteriIDileAra(String musteriID) {
+		return musteriler.stream()
+		                 .filter(m -> m.getId().equals(musteriID))
+		                 .findFirst()
+		                 .orElse(null);
 	}
 	
-	public void musteriSil(String id) {
-		musteriRepository.musteriSil(id);
+	public List<MusteriModel> musterileriListele() {
+		return new ArrayList<>(musteriler);
 	}
 	
-	public List<Musteri> musteriIsimIleAra(String isim) {
-		return musteriRepository.musteriIsimIleAra(isim);
-	}
-	
-	public List<Musteri> musterileriListele() {
-		return musteriRepository.musterileriListele();
+	public List<MusteriModel> musteriIsimIleAra(String isim) {
+		return musteriler.stream()
+		                 .filter(m -> m.getAdi().equalsIgnoreCase(isim))
+		                 .collect(Collectors.toList());
 	}
 	
 	public boolean musteriIDVarMi(String musteriID) {
-		return musteriRepository.musteriIDVarMi(musteriID);
+		return musteriler.stream()
+		                 .anyMatch(m -> m.getId().equals(musteriID));
 	}
 }

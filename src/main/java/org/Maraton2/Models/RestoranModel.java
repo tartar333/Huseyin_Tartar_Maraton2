@@ -3,7 +3,7 @@ package org.Maraton2.Models;
 import org.Maraton2.Enums.Durum;
 import org.Maraton2.Enums.RestoranTipi;
 
-public class Restoran {
+public class RestoranModel {
 	private String restoranID;
 	private String adi;
 	private String adres;
@@ -13,7 +13,7 @@ public class Restoran {
 	private RestoranTipi tipi;
 	
 	
-	public Restoran(String restoranID, String adi, String adres, String telefon, int kapasite, Durum durum, RestoranTipi tipi) {
+	public RestoranModel(String restoranID, String adi, String adres, String telefon, int kapasite, Durum durum, RestoranTipi tipi) {
 		this.restoranID = restoranID;
 		this.adi = adi;
 		this.adres = adres;
@@ -23,15 +23,7 @@ public class Restoran {
 		this.tipi = tipi;
 	}
 	
-	public Restoran(String restoranID, String adi, RestoranTipi tipi, int kapasite, Durum durum) {
-		this.restoranID = restoranID;
-        this.adi = adi;
-        this.tipi = tipi;
-        this.kapasite = kapasite;
-        this.durum = durum;
-	}
-	
-	public Restoran(String restoranID, String adi, RestoranTipi tipi, int kapasite, Durum durum, String adres, String telefon) {
+	public RestoranModel(String restoranID, String adi, RestoranTipi tipi, int kapasite, Durum durum, String adres, String telefon) {
 		this.restoranID = restoranID;
         this.adi = adi;
         this.tipi = tipi;
@@ -39,14 +31,6 @@ public class Restoran {
         this.durum = durum;
         this.adres = adres;
         this.telefon = telefon;
-	}
-	
-	public Restoran(String restoranID, String restoranAdi, String adres, String telefonNumarasi, int kapasite) {
-		this.restoranID = restoranID;
-        this.adi = restoranAdi;
-        this.adres = adres;
-        this.telefon = telefonNumarasi;
-        this.kapasite = kapasite;
 	}
 	
 	
@@ -108,7 +92,7 @@ public class Restoran {
 	
 	@Override
 	public String toString() {
-		return "Restoran{" +
+		return "RestoranModel{" +
 				"restoranID='" + restoranID + '\'' +
 				", adi='" + adi + '\'' +
 				", adres='" + adres + '\'' +

@@ -1,15 +1,13 @@
 package org.Maraton2.Models;
 
-import java.util.ArrayList;
-
-public class Musteri {
+public class MusteriModel {
 	private String id;
 	private String adi;
 	private String soyadi;
 	private String telefon;
 	private String mail;
 	
-	public Musteri(String id, String adi, String soyadi, String telefon, String mail) {
+	public MusteriModel(String id, String adi, String soyadi, String telefon, String mail) {
 		this.id = id;
 		this.adi = adi;
 		this.soyadi = soyadi;
